@@ -8,10 +8,18 @@ public class Robot {
     private String type;
     private int batteryLevel = 100;
     private boolean isPoweredOn = false;
-    private List<String> tasks = new ArrayList<>();
+    private final List<String> tasks = new ArrayList<>();
 
     public void powerOn() {
         isPoweredOn = true;
+    }
+
+    public String doTask() {
+        if (this.tasks.isEmpty()) return "There is no task to do";
+        if (this.batteryLevel < 10) return "There is not enough battery level to do this task";
+        if (!this.isPoweredOn) return "Robot must be on to do a task";
+        this.batteryLevel -= 10;
+        return "Task " + this.tasks.get(0) + " was successfully done";
     }
 
     public Robot(String name, String type) {
@@ -53,10 +61,6 @@ public class Robot {
 
     public List<String> getTasks() {
         return tasks;
-    }
-
-    public void setTasks(List<String> tasks) {
-        this.tasks = tasks;
     }
 
     public void powerOff() {
