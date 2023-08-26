@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Robot implements Prototype<Robot> {
+    private final int maxBatteryLevel = 100;
     private String name;
-    private String type;
-    private int batteryLevel = 100;
+    private final String type;
+    private int batteryLevel = maxBatteryLevel;
     private boolean isPoweredOn = false;
-
-    public void setTasks(List<String> tasks) {
-        this.tasks = tasks;
-    }
 
     private List<String> tasks = new ArrayList<>();
 
@@ -20,10 +17,12 @@ public class Robot implements Prototype<Robot> {
     }
 
     public String doTask() {
+        int taskBatteryCost = 10;
+
         if (this.tasks.isEmpty()) return "There is no task to do";
-        if (this.batteryLevel < 10) return "There is not enough battery level to do this task";
+        if (this.batteryLevel < taskBatteryCost) return "There is not enough battery level to do this task";
         if (!this.isPoweredOn) return "Robot must be on to do a task";
-        this.batteryLevel -= 10;
+        this.batteryLevel -= taskBatteryCost;
 
         String task = this.tasks.get(tasks.size() - 1);
         this.tasks.remove(task);
@@ -47,25 +46,16 @@ public class Robot implements Prototype<Robot> {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public int getBatteryLevel() {
         return batteryLevel;
     }
 
-    public void setBatteryLevel(int batteryLevel) {
-        this.batteryLevel = batteryLevel;
-    }
 
     public boolean isPoweredOn() {
         return isPoweredOn;
     }
 
-    public void setPoweredOn(boolean poweredOn) {
-        isPoweredOn = poweredOn;
-    }
 
     public List<String> getTasks() {
         return tasks;
@@ -76,7 +66,7 @@ public class Robot implements Prototype<Robot> {
     }
 
     public void chargeBattery() {
-        this.batteryLevel = 100;
+        this.batteryLevel = maxBatteryLevel;
     }
 
     public void performTask(String task) {
@@ -84,11 +74,25 @@ public class Robot implements Prototype<Robot> {
     }
 
     @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+
+        Robot otherRobot = (Robot) other;
+        return name.equals(otherRobot.name) &&
+                type.equals(otherRobot.type) &&
+                batteryLevel == otherRobot.batteryLevel &&
+                isPoweredOn == otherRobot.isPoweredOn &&
+                tasks.equals(otherRobot.tasks); // Compare the tasks' contents
+    }
+
+
+    @Override
     public Robot createClone() {
         Robot clone = new Robot(this.name, this.type);
-        clone.setPoweredOn(this.isPoweredOn);
-        clone.setBatteryLevel(this.batteryLevel);
-        clone.setTasks(new ArrayList<>(this.getTasks()));
+        clone.isPoweredOn = this.isPoweredOn;
+        clone.batteryLevel = this.batteryLevel;
+        clone.tasks = new ArrayList<>(this.getTasks());
         return clone;
     }
 }
