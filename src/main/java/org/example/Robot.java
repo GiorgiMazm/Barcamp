@@ -3,12 +3,17 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Robot {
+public class Robot implements Prototype<Robot> {
     private String name;
     private String type;
     private int batteryLevel = 100;
     private boolean isPoweredOn = false;
-    private final List<String> tasks = new ArrayList<>();
+
+    public void setTasks(List<String> tasks) {
+        this.tasks = tasks;
+    }
+
+    private List<String> tasks = new ArrayList<>();
 
     public void powerOn() {
         isPoweredOn = true;
@@ -19,7 +24,10 @@ public class Robot {
         if (this.batteryLevel < 10) return "There is not enough battery level to do this task";
         if (!this.isPoweredOn) return "Robot must be on to do a task";
         this.batteryLevel -= 10;
-        return "Task " + this.tasks.get(0) + " was successfully done";
+
+        String task = this.tasks.get(tasks.size() - 1);
+        this.tasks.remove(task);
+        return "Task " + task + " was successfully done";
     }
 
     public Robot(String name, String type) {
@@ -73,5 +81,14 @@ public class Robot {
 
     public void performTask(String task) {
         this.tasks.add(task);
+    }
+
+    @Override
+    public Robot createClone() {
+        Robot clone = new Robot(this.name, this.type);
+        clone.setPoweredOn(this.isPoweredOn);
+        clone.setBatteryLevel(this.batteryLevel);
+        clone.setTasks(new ArrayList<>(this.getTasks()));
+        return clone;
     }
 }
