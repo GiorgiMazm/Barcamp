@@ -1,17 +1,17 @@
-package solution;
+package solution.character;
 
 public class Main {
     public static void main(String[] args) {
 
-        Mage gendalf = new Mage("Gendalf");
-        gendalf.attack();
-        Mage mageClone = gendalf.clone();
+        Mage gandalf = new Mage("Gandalf");
+        gandalf.attack();
+        Mage mageClone = gandalf.clone();
         mageClone.attack();
 
 
-        Warrior kratos = new Warrior("Kratos");
-        kratos.attack();
-        Warrior warriorClone = kratos.clone();
+        Warrior warGod = new Warrior("Kratos");
+        warGod.attack();
+        Warrior warriorClone = warGod.clone();
         warriorClone.attack();
 
     }
@@ -43,7 +43,7 @@ class Warrior extends GameCharacter {
 
     @Override
     public void attack() {
-        System.out.println("Warrior attacks with a sword!");
+        System.out.println("Warrior " + this.name + " attacks with a sword!");
     }
 
     @Override
