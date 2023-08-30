@@ -8,16 +8,15 @@ public class Main {
 }
 
 abstract class GameCharacter {
-    protected String name;
-    protected int health;
+    public String name;
+    public int health;
 
     public abstract void attack();
 
     public abstract GameCharacter clone();
 }
 
- class Warrior extends GameCharacter {
-    private String name;
+class Warrior extends GameCharacter {
     @Override
     public void attack() {
 
@@ -27,12 +26,10 @@ abstract class GameCharacter {
     public GameCharacter clone() {
         return null;
     }
-     // Implement constructor with name, attributes, attack and clone methods
+    // Implement constructor with name and health, attack and clone methods
 }
 
- class Mage extends GameCharacter {
-
-    private String name;
+class Mage extends GameCharacter {
     @Override
     public void attack() {
 
@@ -42,5 +39,5 @@ abstract class GameCharacter {
     public Mage clone() {
         return null;
     }
-    // Implement constructor with name, attributes, attack and clone methods
+    // Implement constructor with name and health, attack and clone methods
 }

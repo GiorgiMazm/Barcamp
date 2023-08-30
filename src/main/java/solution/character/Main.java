@@ -2,23 +2,26 @@ package solution.character;
 
 public class Main {
     public static void main(String[] args) {
-
-        Mage gandalf = new Mage("Gandalf");
+        Mage gandalf = new Mage("Gandalf", 80);
         gandalf.attack();
         Mage mageClone = gandalf.clone();
         mageClone.attack();
+        System.out.println(gandalf.health);
+        System.out.println(mageClone.health);
 
-
-        Warrior warGod = new Warrior("Kratos");
+        Warrior warGod = new Warrior("Kratos", 100);
         warGod.attack();
         Warrior warriorClone = warGod.clone();
         warriorClone.attack();
+        System.out.println(warGod.health);
+        System.out.println(warriorClone.health);
 
     }
 }
 
 abstract class GameCharacter {
-    protected int health;
+    public int health;
+    public String name;
 
     public abstract void attack();
 
@@ -26,19 +29,9 @@ abstract class GameCharacter {
 }
 
 class Warrior extends GameCharacter {
-    public Warrior(String name) {
+    public Warrior(String name, int characterHealth) {
         this.name = name;
-        health = 100;
-    }
-
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        this.health = characterHealth;
     }
 
     @Override
@@ -48,24 +41,14 @@ class Warrior extends GameCharacter {
 
     @Override
     public Warrior clone() {
-        return new Warrior(this.name);
+        return new Warrior(this.name, this.health);
     }
 }
 
 class Mage extends GameCharacter {
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Mage(String name, int characterHealth) {
         this.name = name;
-    }
-
-    public Mage(String name) {
-        this.name = name;
-        health = 80;
+        this.health = characterHealth;
     }
 
     @Override
@@ -75,6 +58,6 @@ class Mage extends GameCharacter {
 
     @Override
     public Mage clone() {
-        return new Mage(this.name);
+        return new Mage(this.name, this.health);
     }
 }
